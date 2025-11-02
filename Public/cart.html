@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Giỏ hàng - TechStore</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header>
+      <h1>TechStore</h1>
+      <nav>
+        <a href="/">Trang chủ</a>
+        <a href="login.html">Đăng nhập</a>
+        <a href="cart.html">🛒 Giỏ hàng</a>
+      </nav>
+    </header>
+
+    <main class="container">
+      <h2>🛒 Giỏ hàng của bạn</h2>
+      <div id="cart-list" class="mt-4"></div>
+      <div id="cart-summary" class="mt-6"></div>
+    </main>
+
+    <script>
+      // Lấy giỏ hàng từ localStorage
+      let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+      const cartList = document.getElementById("cart-list");
+      const cartSummary = document.getElementById("cart-summary");
+
+      function renderCart() {
+        cartList.innerHTML = "";
+
+        if (cart.length === 0) {
+          cartList.innerHTML = "<p>Giỏ hàng trống!</p>";
+          cartSummary.innerHTML = "";
+          return;
+        }
+
+        cart.forEach((p, index) => {
+          const div = document.createElement("div");
+          div.className =
+            "cart-item border-b py-3 flex justify-between items-center";
+          div.innerHTML = `
+          <div>
+            <strong>${p.name}</strong>
+            <p>${p.price.toLocaleString()}đ</p>
+          </div>
+          <button class="remove-btn" data-index="${index}">❌</button>
+        `;
+          cartList.appendChild(div);
+        });
+
+        // Tính tổng tiền
+        const total = cart.reduce((sum, p) => sum + p.price, 0);
+        cartSummary.innerHTML = `
+        <p><strong>Tổng cộng:</strong> ${total.toLocaleString()}đ</p>
+        <button id="checkout-btn" class="btn mt-2">Thanh toán</button>
+      `;
+
+        // Sự kiện xóa sản phẩm
+        document.querySelectorAll(".remove-btn").forEach((btn) => {
+          btn.addEventListener("click", (e) => {
+            const i = e.target.dataset.index;
+            cart.splice(i, 1);
+            localStorage.setItem("cart", JSON.stringify(cart));
+            renderCart();
+          });
+        });
+
+        // Sự kiện thanh toán
+        document
+          .getElementById("checkout-btn")
+          .addEventListener("click", () => {
+            alert("✅ Thanh toán thành công! Cảm ơn bạn đã mua hàng ❤️");
+            cart = [];
+            localStorage.removeItem("cart");
+            renderCart();
+          });
+      }
+
+      renderCart();
+    </script>
+    <footer>
+      <p>© 2025 TechStore. All rights reserved.</p>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chi tiết sản phẩm - TechStore</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header>
+      <h1>TechStore</h1>
+      <nav>
+        <a href="/">Trang chủ</a>
+        <a href="cart.html">Giỏ hàng</a>
+        <a href="login.html">Đăng nhập</a>
+      </nav>
+    </header>
+
+    <main class="container">
+      <div id="product-detail" class="product-detail"></div>
+    </main>
+
+    <script>
+      // Lấy ID sản phẩm từ URL (?id=123)
+      const params = new URLSearchParams(window.location.search);
+      const id = params.get("id");
+
+      // Lấy sản phẩm từ localStorage hoặc server
+      const products = JSON.parse(localStorage.getItem("products")) || [];
+
+      const product = products.find((p) => p.id == id);
+
+      const detailDiv = document.getElementById("product-detail");
+
+      if (!product) {
+        detailDiv.innerHTML = "<p>❌ Không tìm thấy sản phẩm!</p>";
+      } else {
+        detailDiv.innerHTML = `
+        <div class="detail-box">
+          <h2>${product.name}</h2>
+          <p class="price">${product.price.toLocaleString()}đ</p>
+          <p>${product.description || "Không có mô tả."}</p>
+          <button id="add-cart-btn" class="btn">Thêm vào giỏ</button>
+        </div>
+      `;
+
+        document
+          .getElementById("add-cart-btn")
+          .addEventListener("click", () => {
+            let cart = JSON.parse(localStorage.getItem("cart")) || [];
+            cart.push(product);
+            localStorage.setItem("cart", JSON.stringify(cart));
+            alert("✅ Đã thêm vào giỏ!");
+          });
+      }
+    </script>
+    <footer>
+      <p>© 2025 TechStore. All rights reserved.</p>
+    </footer>
+  </body>
+</html>

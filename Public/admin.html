@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Trang quản lý - TechStore</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body class="bg-gray-100 p-6">
+    <h1 class="text-3xl font-bold mb-4">👨‍💼 Khu vực quản trị sản phẩm</h1>
+
+    <div class="bg-white p-4 rounded shadow-md mb-6">
+      <h2 class="text-xl font-semibold mb-2">Thêm sản phẩm mới</h2>
+      <form id="addForm" class="flex flex-col sm:flex-row gap-3">
+        <input
+          type="text"
+          id="name"
+          placeholder="Tên sản phẩm"
+          class="border px-3 py-2 rounded w-full sm:w-1/3"
+          required
+        />
+        <input
+          type="number"
+          id="price"
+          placeholder="Giá"
+          class="border px-3 py-2 rounded w-full sm:w-1/3"
+          required
+        />
+        <button
+          class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+          type="submit"
+        >
+          Thêm
+        </button>
+      </form>
+    </div>
+
+    <div class="bg-white p-4 rounded shadow-md">
+      <h2 class="text-xl font-semibold mb-3">Danh sách sản phẩm</h2>
+      <table class="w-full border-collapse">
+        <thead>
+          <tr class="bg-gray-200 text-left">
+            <th class="p-2 border">Tên</th>
+            <th class="p-2 border">Giá</th>
+            <th class="p-2 border text-center">Hành động</th>
+          </tr>
+        </thead>
+        <tbody id="productTable"></tbody>
+      </table>
+    </div>
+
+    <button
+      id="logout"
+      class="mt-6 bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+    >
+      Đăng xuất
+    </button>
+
+    <script>
+      // Nếu chưa đăng nhập admin -> quay lại login
+      if (localStorage.getItem("isAdmin") !== "true") {
+        window.location.href = "login.html";
+      }
+
+      const form = document.getElementById("addForm");
+      const nameInput = document.getElementById("name");
+      const priceInput = document.getElementById("price");
+      const table = document.getElementById("productTable");
+
+      // Lấy sản phẩm trong localStorage hoặc tạo mảng mới
+      let products = JSON.parse(localStorage.getItem("products")) || [];
+
+      // Hàm hiển thị danh sách sản phẩm
+      function renderTable() {
+        table.innerHTML = "";
+        if (products.length === 0) {
+          table.innerHTML = `<tr><td colspan="3" class="text-center py-3 text-gray-500">Chưa có sản phẩm nào</td></tr>`;
+          return;
+        }
+
+        products.forEach((p, i) => {
+          const row = document.createElement("tr");
+          row.innerHTML = `
+            <td class="p-2 border">${p.name}</td>
+            <td class="p-2 border">${p.price.toLocaleString()}đ</td>
+            <td class="p-2 border text-center">
+              <button data-index="${i}" class="delete bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600">Xóa</button>
+            </td>
+          `;
+          table.appendChild(row);
+        });
+
+        // Gắn sự kiện XÓA
+        document.querySelectorAll(".delete").forEach((btn) => {
+          btn.addEventListener("click", (e) => {
+            const index = e.target.dataset.index;
+            products.splice(index, 1);
+            localStorage.setItem("products", JSON.stringify(products));
+            renderTable();
+          });
+        });
+      }
+
+      // Khi admin thêm sản phẩm
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const newProduct = {
+          name: nameInput.value.trim(),
+          price: Number(priceInput.value),
+        };
+
+        products.push(newProduct);
+        localStorage.setItem("products", JSON.stringify(products));
+
+        nameInput.value = "";
+        priceInput.value = "";
+        renderTable();
+      });
+
+      // Đăng xuất
+      document.getElementById("logout").addEventListener("click", () => {
+        localStorage.removeItem("isAdmin");
+        window.location.href = "login.html";
+      });
+
+      // Khởi động
+      renderTable();
+    </script>
+    <footer>
+      <p>© 2025 TechStore. All rights reserved.</p>
+    </footer>
+  </body>
+</html>
