@@ -3,39 +3,158 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Công Nghệ Store</title>
+    <title>TechStore - Cửa hàng công nghệ hàng đầu</title>
     <link rel="stylesheet" href="style.css" />
   </head>
+
   <body>
+    <!-- ================= HEADER ================= -->
     <header>
       <nav>
         <h1 class="logo">TechStore</h1>
         <ul class="menu">
-          <li><a href="index.html">Trang chủ</a></li>
-          <li><a href="#">Sản phẩm</a></li>
-          <li><a href="cart.html">Giỏ hàng</a></li>
+          <li><a href="index.html" class="active">Trang chủ</a></li>
+          <li><a href="#brand-products">Sản phẩm</a></li>
+          <li>
+            <a href="cart.html" id="cart-link">
+              Giỏ hàng <span id="cart-count">0</span>
+            </a>
+          </li>
           <li><a href="login.html">Đăng nhập</a></li>
         </ul>
       </nav>
     </header>
 
+    <!-- ================= HERO SECTION ================= -->
     <section class="hero">
-      <h2>Thiết bị công nghệ mới nhất 2025</h2>
-      <p>Khám phá laptop, điện thoại, phụ kiện và nhiều hơn thế.</p>
+      <div class="hero-content">
+        <h2>Thiết bị công nghệ mới nhất 2025</h2>
+        <p>Mua sắm công nghệ hiện đại, giá tốt, bảo hành chính hãng!</p>
+        <a href="#brand-products" class="btn-hero">Khám phá ngay</a>
+      </div>
     </section>
 
-    <section class="mt-6">
-      <h2 class="text-xl font-bold mb-4">Sản phẩm nổi bật</h2>
-      <div
-        id="product-list"
-        class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6"
-      ></div>
+    <!-- ================= ADS SECTION ================= -->
+    <section class="ads-section">
+      <div class="ads-container">
+        <div class="big-ad">
+          <img src="images/2-1.jpg" alt="Quảng cáo 1" />
+        </div>
+        <div class="right-ads">
+          <img src="images/tải xuống.jpg" alt="Quảng cáo 2" />
+          <img
+            src="images/samsung-galaxy-s23-series-lifestyle-lavender-green-cream-1.avif"
+            alt="Quảng cáo 3"
+          />
+        </div>
+      </div>
     </section>
 
+    <!-- ================= HOT DEAL SECTION ================= -->
+    <section class="hot-deal">
+      <div class="hot-header">
+        <img
+          src="images/ee0a3643-f0d2-49b8-9115-a6dc6c2cd01a.png"
+          class="hot-icon"
+          alt="icon"
+        />
+        <h2>ƯU ĐÃI SIÊU HOT</h2>
+      </div>
+
+      <!-- FLASH SALE -->
+      <section class="flash-sale">
+        <h2 class="flash-sale-title">🔥 FLASH SALE GIÁ SỐC 🔥</h2>
+        <div id="flash-products" class="flash-container"></div>
+      </section>
+
+      <!-- HOT PRODUCTS -->
+      <div class="hot-products" id="hot-products"></div>
+    </section>
+
+    <!-- ================= BRAND PRODUCTS ================= -->
+    <section class="brand-products" id="brand-products">
+      <div class="container">
+        <h2>Sản phẩm theo thương hiệu</h2>
+
+        <!-- BRAND LOGO MENU -->
+        <div class="brand-list">
+          <div class="brand-item active" data-brand="all">
+            <img
+              src="images/ee0a3643-f0d2-49b8-9115-a6dc6c2cd01a.png"
+              alt="Tất cả"
+            />
+            <p>Tất cả</p>
+          </div>
+          <div class="brand-item" data-brand="apple">
+            <img src="images/Apple_logo_black.svg" alt="Apple" />
+            <p>Apple</p>
+          </div>
+          <div class="brand-item" data-brand="samsung">
+            <img src="./images/samsunglogo.png" alt="Samsung" />
+            <p>Samsung</p>
+          </div>
+          <div class="brand-item" data-brand="asus">
+            <img src="images/asus-logo-rog-icon-symbol-26.png" alt="Asus" />
+            <p>Asus</p>
+          </div>
+          <div class="brand-item" data-brand="sony">
+            <img src="./images/sony-logo.png" alt="Sony" />
+            <p>Sony</p>
+          </div>
+        </div>
+
+        <!-- SẢN PHẨM THEO THƯƠNG HIỆU -->
+        <div id="brand-container"></div>
+      </div>
+    </section>
+
+    <!-- ================= ABOUT ================= -->
+    <section class="about">
+      <div class="about-container">
+        <div class="about-text">
+          <h2>Về TechStore</h2>
+          <p>
+            <strong>TechStore</strong> là cửa hàng công nghệ hàng đầu Việt Nam
+            chuyên cung cấp các thiết bị điện tử hiện đại như điện thoại,
+            laptop, tai nghe, TV và phụ kiện chính hãng. Với cam kết mang lại
+            chất lượng tốt nhất, giá cả hợp lý và dịch vụ khách hàng tận tâm,
+            TechStore luôn là lựa chọn đáng tin cậy của mọi người yêu công nghệ.
+          </p>
+          <a href="#" class="about-btn">Tìm hiểu thêm</a>
+        </div>
+        <div class="about-img">
+          <img
+            src="images/ee0a3643-f0d2-49b8-9115-a6dc6c2cd01a.png"
+            alt="Giới thiệu TechStore"
+          />
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= FOOTER ================= -->
     <footer>
-      <p>© 2025 TechStore. All rights reserved.</p>
+      <div class="footer-container">
+        <div class="footer-info">
+          <h3>TechStore</h3>
+          <p>
+            <strong>Hotline:</strong> <a href="tel:0123456789">0123 456 789</a>
+          </p>
+          <p>
+            <strong>Email:</strong>
+            <a href="mailto:contact@techstore.vn">contact@techstore.vn</a>
+          </p>
+          <p>
+            <strong>Địa chỉ:</strong> 123 Nguyễn Văn Cừ, Quận 5, TP. Hồ Chí Minh
+          </p>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>© 2025 <strong>TechStore</strong>. All rights reserved.</p>
+      </div>
     </footer>
 
+    <!-- ================= SCRIPTS ================= -->
     <script src="main.js"></script>
   </body>
 </html>
